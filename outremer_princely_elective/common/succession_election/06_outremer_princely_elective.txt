@@ -1,38 +1,29 @@
 ﻿outremer_princely_elective = {
 	candidates = {
 		add = {
-			type = holder_close_or_extended_family
+			type = holder_direct_vassals
 			limit = {
-				this.faith = faith:catholic
-				outremer_princely_elective_potential_candidate_trigger = yes
-				highest_held_title_tier < tier_kingdom
-				NAND = {
-					exists = father.primary_title
-					father = {
-						highest_held_title_tier >= tier_kingdom
-					}
-					father.primary_title.current_heir = this
-				}
-				NAND = {
-					exists = mother.primary_title
-					mother = {
-						highest_held_title_tier >= tier_kingdom
-					}
-					mother.primary_title.current_heir = this
-				}
+				feudal_elective_potential_landed_candidate_trigger = yes
 			}
 		}
 		add = {
 			type = title_dejure_vassals
 			limit = {
-				this.faith = faith:catholic
-				has_unelectable_outremer_princely_government_trigger = no
+				is_independent_ruler = yes #De jure vassals of the title who are not de facto vassals of the current ruler.
+				feudal_elective_potential_landed_candidate_trigger = yes
 			}
 		}
 		add = {
 			type = title_claimants
 			limit = {
-				outremer_princely_elective_potential_candidate_trigger = yes
+				feudal_elective_potential_landless_claimant_candidate_trigger = yes
+			}
+		}
+		add = {
+			type = holder_close_or_extended_family
+			limit = {
+				is_close_family_of = scope:holder
+				feudal_elective_potential_landless_dynastic_candidate_trigger = yes
 			}
 		}
 	}
@@ -45,6 +36,7 @@
 				NOT = {
 					has_trait = excommunicated
 				}
+				highest_held_title_tier >= tier_duchy
 			}
 		}
 	}
@@ -52,7 +44,7 @@
 		base = 1
 		modifier = {
 			desc = tooltip_elective_current_ruler
-			add = 1
+			add = 3
 			this = scope:holder
 		}
 		modifier = { 
